@@ -50,7 +50,7 @@ A sleek, browser-based paddle ball game with multiple visually stunning worlds a
 
 ## Credits
 
-Developed by [Your Name or Handle]. Inspired by classic paddle ball games and modern UI effects.
+Developed by me. Inspired by classic paddle ball games and modern UI effects.
 
 ---
 

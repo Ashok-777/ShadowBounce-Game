@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Montserrat', sans-serif;
+  color: #ddd;
+  user-select: none;
+  background: #1a1a2e;
+}
+
+#gameCanvas {
+  display: block;
+  margin: 40px auto;
+  background: radial-gradient(circle at center, #12122b 0%, #000014 80%);
+  box-shadow: 0 0 30px #4f4fc7 inset;
+  border: 4px solid #4f4fc7;
+  border-radius: 15px;
+}
+
+#scoreBoard {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+  padding: 6px 12px;
+  background: rgba(31, 31, 58, 0.95);
+  border-radius: 8px;
+  color: #c0c0ff;
+  letter-spacing: 1.5px;
+  box-shadow: 0 0 12px #6c6cd1;
+  user-select: none;
+  z-index: 20;
+}
+
+#levelDisplay {
+  text-align: center;
+  font-weight: 700;
+  margin-top: 10px;
+  color: #a7a7d9;
+  text-shadow: 0 0 6px #6666ff;
+  letter-spacing: 2px;
+}
+
+#overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(10, 10, 30, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #aaa;
+  font-size: 24px;
+  z-index: 50;
+}
+
+#overlay.hidden {
+  display: none;
+}
+
+button {
+  background: #4f4fc7;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 20px;
+  padding: 12px 28px;
+  margin: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 12px #6c6cd1;
+  transition: background-color 0.3s ease;
+}
+button:hover {
+  background: #6c6cd1;
+}
+
+#achievementBox {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: rgba(80, 80, 140, 0.9);
+  padding: 20px 30px;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 18px;
+  box-shadow: 0 0 20px #9a9af0;
+  z-index: 30;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  user-select: none;
+}
+
+#worldSelect {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#worldSelect button {
+  width: 250px;
+}

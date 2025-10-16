@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shadow Bounce - Multi World</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <canvas id="gameCanvas" width="800" height="450"></canvas>
+
+  <div id="scoreBoard">Score: 0 | Best: 0</div>
+  <div id="levelDisplay">Shadow Bounce</div>
+
+  <div id="achievementBox"></div>
+
+  <div id="overlay">
+    <div id="worldSelectionScreen">
+      <h1>Select Your World</h1>
+      <div id="worldSelect">
+        <button data-world="1">World 1 - Classic Shadow</button>
+        <button data-world="2">World 2 - Gold World</button>
+        <button data-world="3">World 3 - Color Pulse</button>
+      </div>
+    </div>
+
+    <div id="startScreen" style="display:none;">
+      <h1>Shadow Bounce</h1>
+      <p>Use ← → arrows to move paddle</p>
+      <p>Keep the ball bouncing as long as you can!</p>
+      <button id="startBtn">Start Game</button>
+    </div>
+
+    <div id="countdownScreen" style="display:none; font-size: 60px; color:#a7a7d9; text-shadow: 0 0 10px #6666ff; margin-top: 20px; font-weight: 700;">
+      3
+    </div>
+
+    <div id="gameOverScreen" style="display:none;">
+      <h1>Game Over</h1>
+      <p id="finalScoreText"></p>
+      <button id="retryBtn">Try Again</button>
+      <button id="exitBtn">Exit</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

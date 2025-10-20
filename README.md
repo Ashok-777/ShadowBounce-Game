@@ -30,6 +30,13 @@ A sleek, browser-based paddle ball game with multiple visually stunning worlds a
 6. Press `P` anytime to pause/resume the game.
 
 ---
+## Project Video
+
+Check out my project video on LinkedIn:
+
+https://www.linkedin.com/posts/ashok-s-844a46387_shadowbounce-indiegamedev-browsergame-activity-7384600589416189952-KOEh?utm_source=social_share_video_v2&utm_medium=android_app&rcm=ACoAAF9fWTQBQNOw2vvDrC56K57letS6vXPi4nc&utm_campaign=share_via
+
+---
 
 ## Technologies Used
 

@@ -67,13 +67,44 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-## Installation
+## 💻 Installation & Execution
 
-No installation required! Simply clone or download the repository and open `index.html` in any modern web browser.
+Follow these steps to run **Shadow Bounce - Multi World** locally:
 
----
+### 1. Download or Clone the Project
+You can either:
 
+- **Download ZIP:**  
+  1. Go to your [Shadow Bounce GitHub Repository](https://github.com/yourusername/shadow-bounce)  
+  2. Click **Code → Download ZIP**  
+  3. Extract the ZIP to a folder on your computer  
+
+- **Or Clone with Git:**  
 ```bash
 git clone https://github.com/yourusername/shadow-bounce.git
 cd shadow-bounce
-open index.html
+```
+---
+
+### 2. Open the Game
+1. Inside the project folder, locate `index.html`.  
+2. Double-click `index.html` **or** right-click → **Open with** → select your preferred modern browser (Chrome, Firefox, Edge, etc.).  
+
+> ✅ The game will load, and you can select a world to start playing.
+
+---
+
+### 3. Optional: Use a Local Development Server (For Auto-Reload While Editing)
+If you want live-reloading during development (requires Node.js):
+
+```bash
+# Install live-server globally
+npm install -g live-server
+
+# Start the server in the project folder
+live-server
+```
+
+This will automatically open the game in your default browser and refresh on code changes.
+
+````

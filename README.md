@@ -52,13 +52,7 @@ https://www.linkedin.com/posts/ashok-s-844a46387_shadowbounce-indiegamedev-brows
 - Mobile touch controls support  
 - More worlds and power-ups  
 - Leaderboards with online score tracking
-
----
-
-## Credits
-
-Developed by me. Inspired by classic paddle ball games and modern UI effects.
-
+- 
 ---
 
 ## License

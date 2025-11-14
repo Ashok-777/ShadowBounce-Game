@@ -1,4 +1,5 @@
-// your code goes here
+// © Ashok-777
+// GitHub: https://github.com/Ashok-777
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -437,3 +438,5 @@ window.onload = () => {
 
   updateScoreBoard();
 };
+// © Ashok-777
+// GitHub: https://github.com/Ashok-777

@@ -107,5 +107,9 @@ live-server
 
 This will automatically open the game in your default browser and refresh on code changes.
 
-```
+---
+
+<p align="center">© Ashok-777 | Crafted with ❤️ and curiosity</p>
+
+---
 

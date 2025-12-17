@@ -109,6 +109,14 @@ This will automatically open the game in your default browser and refresh on cod
 
 ---
 
+## Deployment
+
+This project is deployed using **Vercel**.  
+
+🔗 **Live Demo:** [Shadow Bounce Game](https://shadowbouncegame.vercel.app/)
+
+---
+
 <p align="center">© Ashok-777 | Crafted with ❤️ and curiosity</p>
 
 ---

@@ -11,50 +11,58 @@ body {
   background: #1a1a2e;
 }
 
+/* Canvas */
 #gameCanvas {
   display: block;
-  margin: 40px auto;
+  margin: 2vh auto;
+  max-width: 95vw;
+  height: auto; /* Height handled by JS */
   background: radial-gradient(circle at center, #12122b 0%, #000014 80%);
-  box-shadow: 0 0 30px #4f4fc7 inset;
-  border: 4px solid #4f4fc7;
-  border-radius: 15px;
+  box-shadow: 0 0 2vw #4f4fc7 inset;
+  border: 0.4vw solid #4f4fc7;
+  border-radius: 1.5vw;
 }
 
+/* Scoreboard */
 #scoreBoard {
   position: fixed;
-  top: 10px;
-  left: 10px;
-  font-size: 20px;
-  padding: 6px 12px;
+  top: 1vh;
+  left: 1vw;
+  font-size: 2vw;
+  padding: 0.5vw 1vw;
   background: rgba(31, 31, 58, 0.95);
-  border-radius: 8px;
+  border-radius: 0.5vw;
   color: #c0c0ff;
-  letter-spacing: 1.5px;
-  box-shadow: 0 0 12px #6c6cd1;
+  letter-spacing: 0.1em;
+  box-shadow: 0 0 1vw #6c6cd1;
   user-select: none;
   z-index: 20;
 }
 
+/* Level display */
 #levelDisplay {
   text-align: center;
   font-weight: 700;
-  margin-top: 10px;
+  margin-top: 1vh;
+  font-size: 2vw;
   color: #a7a7d9;
-  text-shadow: 0 0 6px #6666ff;
-  letter-spacing: 2px;
+  text-shadow: 0 0 0.3vw #6666ff;
+  letter-spacing: 0.15em;
 }
 
+/* Overlay (world select, start, game over) */
 #overlay {
   position: fixed;
   top: 0; left: 0;
-  width: 100vw; height: 100vh;
+  width: 100vw;
+  height: 100vh;
   background: rgba(10, 10, 30, 0.9);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: #aaa;
-  font-size: 24px;
+  font-size: 2vw;
   z-index: 50;
 }
 
@@ -62,32 +70,35 @@ body {
   display: none;
 }
 
+/* Buttons */
 button {
   background: #4f4fc7;
   border: none;
-  border-radius: 8px;
+  border-radius: 0.5vw;
   color: white;
-  font-size: 20px;
-  padding: 12px 28px;
-  margin: 10px;
+  font-size: 1.5vw;
+  padding: 1vw 2vw;
+  margin: 1vw;
   cursor: pointer;
-  box-shadow: 0 0 12px #6c6cd1;
+  box-shadow: 0 0 1vw #6c6cd1;
   transition: background-color 0.3s ease;
 }
+
 button:hover {
   background: #6c6cd1;
 }
 
+/* Achievement box */
 #achievementBox {
   position: fixed;
-  top: 80px;
-  right: 20px;
+  top: 8vh;
+  right: 2vw;
   background: rgba(80, 80, 140, 0.9);
-  padding: 20px 30px;
-  border-radius: 12px;
+  padding: 1.5vw 2vw;
+  border-radius: 1vw;
   color: #fff;
-  font-size: 18px;
-  box-shadow: 0 0 20px #9a9af0;
+  font-size: 1.5vw;
+  box-shadow: 0 0 2vw #9a9af0;
   z-index: 30;
   opacity: 0;
   pointer-events: none;
@@ -95,6 +106,7 @@ button:hover {
   user-select: none;
 }
 
+/* World selection buttons */
 #worldSelect {
   display: flex;
   flex-direction: column;
@@ -102,7 +114,61 @@ button:hover {
 }
 
 #worldSelect button {
-  width: 250px;
+  width: 20vw;
+  min-width: 150px;
+  max-width: 250px;
 }
+
+/* Countdown screen */
+#countdownScreen {
+  font-size: 10vw;
+  color: #a7a7d9;
+  text-shadow: 0 0 1vw #6666ff;
+  font-weight: 700;
+  margin-top: 2vh;
+}
+
+/* Media queries for mobile devices */
+@media (max-width: 768px) {
+  #scoreBoard, #levelDisplay, #achievementBox {
+    font-size: 4vw;
+    padding: 2vw;
+  }
+
+  button {
+    font-size: 3vw;
+    padding: 2vw 4vw;
+  }
+
+  #worldSelect button {
+    width: 60vw;
+    max-width: none;
+  }
+
+  #countdownScreen {
+    font-size: 15vw;
+  }
+}
+
+@media (max-width: 480px) {
+  #scoreBoard, #levelDisplay, #achievementBox {
+    font-size: 5vw;
+    padding: 3vw;
+  }
+
+  button {
+    font-size: 4vw;
+    padding: 3vw 5vw;
+  }
+
+  #worldSelect button {
+    width: 70vw;
+  }
+
+  #countdownScreen {
+    font-size: 18vw;
+  }
+}
+
 /* © Ashok-777 */
 /* GitHub: https://github.com/Ashok-777 */

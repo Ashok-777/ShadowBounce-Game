@@ -29,27 +29,27 @@ let countdownInterval = null;
 
 // Achievements config (score thresholds)
 const achievements = [
-  {score: 5, text: 'Rising Shadow - Score 5!'},
-  {score: 10, text: 'Bounce Master - Score 10!'},
-  {score: 20, text: 'Shadow Legend - Score 20!'}
+  { score: 5, text: 'Rising Shadow - Score 5!' },
+  { score: 10, text: 'Bounce Master - Score 10!' },
+  { score: 20, text: 'Shadow Legend - Score 20!' }
 ];
 
 // Ball and paddle initial properties
 const paddle = {
-  width: 120,
-  height: 15,
-  x: (canvas.width - 120) / 2,
-  y: canvas.height - 40,
+  width: 0, // will be set dynamically
+  height: 0,
+  x: 0,
+  y: 0,
   speed: 10,
   color: '#d4cfff',
   glowColor: 'rgba(212, 207, 255, 0.8)'
 };
 
 const ball = {
-  x: canvas.width / 2,
-  y: canvas.height / 2,
-  radius: 15,
-  speedX: 5, // medium speed start
+  x: 0,
+  y: 0,
+  radius: 0,
+  speedX: 5,
   speedY: 4,
   baseSpeedX: 5,
   baseSpeedY: 4,
@@ -61,15 +61,42 @@ const ball = {
 let glowCircles = [];
 
 // Color pulse state for world 3
-let pulseColor = {r: 170, g: 187, b: 255};
+let pulseColor = { r: 170, g: 187, b: 255 };
 
 // Controls
 const keys = {};
+let isDragging = false;
 
 // Utils
 function randomRange(min, max) {
   return Math.random() * (max - min) + min;
 }
+
+// Resize canvas for responsiveness
+function resizeCanvas() {
+  const aspectRatio = 16 / 9;
+  let width = window.innerWidth * 0.95;
+  let height = width / aspectRatio;
+
+  if (height > window.innerHeight * 0.8) {
+    height = window.innerHeight * 0.8;
+    width = height * aspectRatio;
+  }
+
+  canvas.width = width;
+  canvas.height = height;
+
+  // Set paddle and ball sizes proportional to canvas
+  paddle.width = canvas.width * 0.15;
+  paddle.height = canvas.height * 0.033;
+
+  ball.radius = canvas.width * 0.018;
+
+  resetPositions();
+}
+
+window.addEventListener('resize', resizeCanvas);
+window.addEventListener('load', resizeCanvas);
 
 // Initialize glow circles (world 1 & 2)
 function initGlowCircles(colorBase) {
@@ -89,7 +116,6 @@ function initGlowCircles(colorBase) {
 // Draw background based on selected world & time
 function drawBackground(time) {
   if (selectedWorld === 3) {
-    // Color pulse world: background changes color on ball hit (pulseColor)
     const grad = ctx.createRadialGradient(
       canvas.width / 2,
       canvas.height / 2,
@@ -100,13 +126,9 @@ function drawBackground(time) {
     );
     grad.addColorStop(0, `rgba(${pulseColor.r}, ${pulseColor.g}, ${pulseColor.b}, 1)`);
     grad.addColorStop(1, `rgba(0, 0, 0, 1)`);
-
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   } else {
-    // Classic shadow or Gold World: dark gradient + glowing circles
-
-    // Base dark gradient
     const grad = ctx.createRadialGradient(
       canvas.width / 2,
       canvas.height / 2,
@@ -115,23 +137,19 @@ function drawBackground(time) {
       canvas.height / 2,
       canvas.width / 2
     );
-    grad.addColorStop(0, selectedWorld === 2 ? '#4a4400' : '#12122b'); // goldish for world 2
+    grad.addColorStop(0, selectedWorld === 2 ? '#4a4400' : '#12122b');
     grad.addColorStop(1, '#000010');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Draw glowing circles with pulse
     glowCircles.forEach(c => {
       const pulse = Math.sin(time / 500 + c.pulseOffset) * 10 + 25;
       const radius = c.radius + pulse;
-
       const glowColor = selectedWorld === 2
-        ? `rgba(255, 215, 0, 0.15)` // gold world glow
-        : `rgba(120, 120, 255, 0.15)`; // classic glow
-
+        ? `rgba(255, 215, 0, 0.15)`
+        : `rgba(120, 120, 255, 0.15)`;
       const baseColor = selectedWorld === 2 ? '#ffdd55' : '#aabbff';
 
-      // Outer glow
       let gradient = ctx.createRadialGradient(c.x, c.y, radius * 0.2, c.x, c.y, radius);
       gradient.addColorStop(0, `${baseColor}aa`);
       gradient.addColorStop(1, `${glowColor}`);
@@ -146,14 +164,12 @@ function drawBackground(time) {
 
 // Draw paddle
 function drawPaddle() {
-  // Paddle glow
   ctx.shadowColor = paddle.glowColor;
   ctx.shadowBlur = 15;
 
   ctx.fillStyle = paddle.color;
   ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
 
-  // Reset shadow for other drawing
   ctx.shadowBlur = 0;
 }
 
@@ -173,31 +189,29 @@ function drawBall() {
 // Draw score and level display updates
 function updateScoreBoard() {
   scoreBoard.textContent = `Score: ${score} | Best: ${bestScore}`;
-  document.getElementById('levelDisplay').textContent = 
+  document.getElementById('levelDisplay').textContent =
     selectedWorld === 1 ? 'Shadow Bounce' :
-    selectedWorld === 2 ? 'Gold World' : 'Color Pulse';
+      selectedWorld === 2 ? 'Gold World' : 'Color Pulse';
 }
 
 // Reset ball and paddle position
 function resetPositions() {
   paddle.x = (canvas.width - paddle.width) / 2;
-  paddle.y = canvas.height - 40;
+  paddle.y = canvas.height - paddle.height - 20;
 
   ball.x = canvas.width / 2;
   ball.y = canvas.height / 2;
 
-  // Randomize ball direction and speed
   ball.speedX = (Math.random() < 0.5 ? -1 : 1) * ball.baseSpeedX;
   ball.speedY = -ball.baseSpeedY;
 
   if (selectedWorld === 2) {
-    // Slightly faster in Gold World
     ball.speedX *= 1.2;
     ball.speedY *= 1.2;
   }
 }
 
-// Handle achievements unlocking
+// Achievements
 function checkAchievements() {
   achievements.forEach(a => {
     if (score >= a.score && !achievementsUnlocked.has(a.text)) {
@@ -207,19 +221,17 @@ function checkAchievements() {
   });
 }
 
-// Show achievement popup
 function showAchievement(text) {
   achievementBox.textContent = text;
   achievementBox.style.opacity = 1;
   achievementBox.style.pointerEvents = 'auto';
-
   setTimeout(() => {
     achievementBox.style.opacity = 0;
     achievementBox.style.pointerEvents = 'none';
   }, 3000);
 }
 
-// Game Over handling
+// Game Over
 function gameOver() {
   running = false;
   overlay.style.display = 'flex';
@@ -229,16 +241,12 @@ function gameOver() {
   gameOverScreen.style.display = 'flex';
   finalScoreText.textContent = `Your score: ${score}`;
 
-  if (score > bestScore) {
-    bestScore = score;
-  }
+  if (score > bestScore) bestScore = score;
   updateScoreBoard();
 }
 
-// Game loop variables
+// Game loop
 let lastTime = 0;
-
-// Game loop function
 function gameLoop(time = 0) {
   if (!running || paused) {
     lastTime = time;
@@ -251,18 +259,12 @@ function gameLoop(time = 0) {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Draw background with current time for pulse effect
   drawBackground(time);
 
-  // Move paddle
-  if (keys['ArrowLeft'] || keys['a']) {
-    paddle.x -= paddle.speed;
-  }
-  if (keys['ArrowRight'] || keys['d']) {
-    paddle.x += paddle.speed;
-  }
+  // Keyboard paddle movement
+  if (keys['ArrowLeft'] || keys['a']) paddle.x -= paddle.speed;
+  if (keys['ArrowRight'] || keys['d']) paddle.x += paddle.speed;
 
-  // Keep paddle inside canvas
   if (paddle.x < 0) paddle.x = 0;
   if (paddle.x + paddle.width > canvas.width) paddle.x = canvas.width - paddle.width;
 
@@ -294,19 +296,15 @@ function gameLoop(time = 0) {
     ball.y = paddle.y - ball.radius;
     ball.speedY *= -1;
 
-    // Increase score
     score++;
-
-    // Increase speed slightly for challenge
     if (selectedWorld !== 3) {
       ball.speedX *= 1.05;
       ball.speedY *= 1.05;
     } else {
-      // In color pulse world, pulse ball color randomly
       pulseColor = {
         r: Math.floor(randomRange(100, 255)),
         g: Math.floor(randomRange(100, 255)),
-        b: Math.floor(randomRange(100, 255)),
+        b: Math.floor(randomRange(100, 255))
       };
       ball.color = `rgb(${pulseColor.r}, ${pulseColor.g}, ${pulseColor.b})`;
       ball.glowColor = `rgba(${pulseColor.r}, ${pulseColor.g}, ${pulseColor.b}, 0.8)`;
@@ -316,7 +314,6 @@ function gameLoop(time = 0) {
     checkAchievements();
   }
 
-  // Ball falls below paddle = game over
   if (ball.y - ball.radius > canvas.height) {
     gameOver();
     return;
@@ -328,7 +325,7 @@ function gameLoop(time = 0) {
   requestAnimationFrame(gameLoop);
 }
 
-// Start countdown before starting game
+// Countdown
 function startCountdown() {
   countdownValue = 3;
   countdownScreen.textContent = countdownValue;
@@ -337,9 +334,8 @@ function startCountdown() {
 
   countdownInterval = setInterval(() => {
     countdownValue--;
-    if (countdownValue > 0) {
-      countdownScreen.textContent = countdownValue;
-    } else {
+    if (countdownValue > 0) countdownScreen.textContent = countdownValue;
+    else {
       clearInterval(countdownInterval);
       countdownScreen.style.display = 'none';
       startGame();
@@ -347,7 +343,7 @@ function startCountdown() {
   }, 1000);
 }
 
-// Start the actual game
+// Start game
 function startGame() {
   resetPositions();
   score = 0;
@@ -358,11 +354,8 @@ function startGame() {
   overlay.style.display = 'none';
   gameOverScreen.style.display = 'none';
 
-  if (selectedWorld === 1) {
-    initGlowCircles('#aabbff');
-  } else if (selectedWorld === 2) {
-    initGlowCircles('#ffdd55');
-  }
+  if (selectedWorld === 1) initGlowCircles('#aabbff');
+  else if (selectedWorld === 2) initGlowCircles('#ffdd55');
 
   requestAnimationFrame(gameLoop);
 }
@@ -375,7 +368,7 @@ function togglePause() {
     ctx.fillStyle = 'rgba(0,0,0,0.6)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#bbb';
-    ctx.font = '48px Montserrat, sans-serif';
+    ctx.font = `${canvas.width * 0.05}px Montserrat, sans-serif`;
     ctx.textAlign = 'center';
     ctx.fillText('Paused', canvas.width / 2, canvas.height / 2);
   } else {
@@ -395,18 +388,12 @@ worldButtons.forEach(btn => {
   });
 });
 
-// Start button
-startBtn.addEventListener('click', () => {
-  startCountdown();
-});
-
-// Retry button
+// Buttons
+startBtn.addEventListener('click', startCountdown);
 retryBtn.addEventListener('click', () => {
   gameOverScreen.style.display = 'none';
   startScreen.style.display = 'block';
 });
-
-// Exit button (go back to world select)
 exitBtn.addEventListener('click', () => {
   gameOverScreen.style.display = 'none';
   overlay.style.display = 'flex';
@@ -414,28 +401,39 @@ exitBtn.addEventListener('click', () => {
   startScreen.style.display = 'none';
 });
 
-// Keyboard controls
+// Keyboard
 window.addEventListener('keydown', e => {
   if (e.repeat) return;
-
   keys[e.key] = true;
-
-  if (e.key.toLowerCase() === 'p') {
-    togglePause();
-  }
+  if (e.key.toLowerCase() === 'p') togglePause();
 });
-window.addEventListener('keyup', e => {
-  keys[e.key] = false;
-});
+window.addEventListener('keyup', e => { keys[e.key] = false; });
 
-// On page load, show world selection screen
+// Touch & Mouse sliding
+function updatePaddlePosition(clientX) {
+  const rect = canvas.getBoundingClientRect();
+  let x = clientX - rect.left - paddle.width / 2;
+  if (x < 0) x = 0;
+  if (x + paddle.width > canvas.width) x = canvas.width - paddle.width;
+  paddle.x = x;
+}
+
+canvas.addEventListener('touchstart', e => { isDragging = true; updatePaddlePosition(e.touches[0].clientX); });
+canvas.addEventListener('touchmove', e => { if (isDragging) updatePaddlePosition(e.touches[0].clientX); });
+canvas.addEventListener('touchend', () => { isDragging = false; });
+
+canvas.addEventListener('mousedown', e => { isDragging = true; updatePaddlePosition(e.clientX); });
+canvas.addEventListener('mousemove', e => { if (isDragging) updatePaddlePosition(e.clientX); });
+canvas.addEventListener('mouseup', () => { isDragging = false; });
+canvas.addEventListener('mouseleave', () => { isDragging = false; });
+
+// Initial load
 window.onload = () => {
   overlay.style.display = 'flex';
   worldSelectionScreen.style.display = 'flex';
   startScreen.style.display = 'none';
   countdownScreen.style.display = 'none';
   gameOverScreen.style.display = 'none';
-
   updateScoreBoard();
 };
 // © Ashok-777

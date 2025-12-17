@@ -1,0 +1,11 @@
+{
+  "_comment": "© Ashok-777 | GitHub: https://github.com/Ashok-777"
+}
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
+{
+  "_comment": "© Ashok-777 | GitHub: https://github.com/Ashok-777"
+}

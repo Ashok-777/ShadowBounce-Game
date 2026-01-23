@@ -117,7 +117,9 @@ This project is deployed using **Vercel**.
 
 ---
 
-<p align="center">© Ashok-777 | Crafted with ❤️ and curiosity</p>
+<p align="center">
+  © <a href="https://github.com/Ashok-777" target="_blank">Ashok-777</a> | Crafted with ❤️ and curiosity
+</p>
 
 ---
 
